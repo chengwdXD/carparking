@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
 
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+import ToTap from './components/ToTap.vue'
+import {RouterView} from "vue-router"
 </script>
 
 <template>
-
-  <HelloWorld msg="Vite + Vue" />
+<Header/>
+<RouterView/>
+<ToTap/>
+<Footer/>
+  
 </template>
 
 <style scoped>

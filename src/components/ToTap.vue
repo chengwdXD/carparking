@@ -24,7 +24,7 @@ onUnmounted(() => {
   <button
     v-if="showButton"
     @click="scrollToTop"
-    class="fixed bottom-[100px] right-[60px] bg-gray-600 text-white px-4 py-2 rounded-full shadow-lg  transition hidden md:flex hover:scale-110 cursor-pointer"
+    class="fixed bottom-[100px] right-[60px] bg-gray-600 text-white px-4 py-2 rounded-full shadow-lg  transition hidden min-[375px]:flex hover:scale-110 cursor-pointer z-10"
   >
     ↑ 
   </button>

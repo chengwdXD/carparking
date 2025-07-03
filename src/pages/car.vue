@@ -2,6 +2,8 @@
   import { ref,onMounted,computed } from 'vue'
   import { useApiCar } from '../store/apicar.ts'
   import searchinput from '../components/searchinput.vue'
+  import DarkChange from '../components/DarkChange.vue'
+  import Swal from 'sweetalert2'
   const apiCarStore = useApiCar()
   const datadate = ref<string>('')
   onMounted(async () => {//頁面一載入執行api
@@ -20,7 +22,11 @@ const searchQuery = ref('')//搜尋條件
 
 const submitSearch = async () => {//按鈕送出事件
   if (!searchQuery.value.trim()) {
-    alert("請輸入條件搜尋");
+    await Swal.fire({
+      title: '請輸入搜尋條件',
+      confirmButtonText: '確定',
+      confirmButtonColor:'#3490dc'
+    });
     return;
   }
   const query = `${searchselect.value} ${searchQuery.value}`;
@@ -78,11 +84,12 @@ const totalpagesarray = computed(() => {
   }
 </script>
 <template>
-   <div class="flex justify-center  min-h-screen bg-gray-100 ">
-      <div class="w-full max-w-5xl bg-white  shadow-md rounded-lg p-6">
+   <div class="relative flex justify-center  min-h-screen bg-gray-100  bg-[url('/images/chargecar.png')] bg-[length:100%_100%] bg-no-repeat bg-center  ">
+    <div class="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
+      <div class="w-full max-w-5xl dark:bg-[lightslategray] bg-gray-100  shadow-md rounded-lg p-6 z-10">
         <div class="font-mono">臺北市電動車充電站資訊</div>
    <div  class="p-4 flex items-center space-x-2 mx-auto max-w-3xl flex-col md:flex-row">
-        <select v-model="searchselect" class="px-4 py-2 border rounded w-full mb-5 md:w-auto md:mb-0 cursor-pointer focus-visible:outline-none">
+        <select v-model="searchselect" class=" bg-white dark:bg-gray-800 dark:text-white px-4 py-2 border rounded w-full mb-5 md:w-auto md:mb-0 cursor-pointer focus-visible:outline-none">
           <option value="地址">地址</option>
           <option value="廠商">廠商</option>
           <option value="名稱">名稱</option>
@@ -90,7 +97,8 @@ const totalpagesarray = computed(() => {
         <!-- 搜尋輸入框 -->
         <searchinput v-model="searchQuery" placeholder="搜尋..." />
         <div class="mt-2 md:mt-0 flex space-x-2 ">
-          <button @click="submitSearch" class="bg-blue-700 text-gray-50 px-4 py-2 rounded cursor-pointer">送出</button>
+          <button @click="submitSearch" class="bg-blue-500 text-gray-50 px-4 py-2 rounded cursor-pointer">送出</button>
+          <DarkChange/>
         </div>
        
       </div>
@@ -102,7 +110,7 @@ const totalpagesarray = computed(() => {
           <table class="w-full border-collapse border border-gray-300 text-center  ">
             <thead class="bg-gray-900 text-white ">
               <tr>
-                <th class="border border-gray-300 px-4 py-2 ">#</th>
+                <th class="border border-gray-300 px-4 py-2 hidden md:table-cell">#</th>
                 <th class="border border-gray-300 px-4 py-2 ">廠商</th>
                 <th class="border border-gray-300 px-4 py-2 ">名稱</th>
                 <th class="border border-gray-300 px-4 py-2 ">地址</th>
@@ -111,11 +119,11 @@ const totalpagesarray = computed(() => {
             </thead>
           <tbody v-if="apiCarStore.data && apiCarStore.data.result && apiCarStore.data.result.results">
   <tr v-for="(item, key) in pageshowdata" :key="key" class="group">
-  <td class="border border-gray-300 px-4 py-2 bg-white text-black group-hover:bg-gray-200 ">{{ (currentpage - 1) * pageview + key + 1 }}</td>
-    <td class="border border-gray-300 px-4 py-2 bg-white text-black group-hover:bg-gray-200">{{ item.廠商 }}</td>
-    <td class="border border-gray-300 px-4 py-2 bg-white text-black group-hover:bg-gray-200">{{ item.名稱 }}</td>
-    <td class="border border-gray-300 px-4 py-2 bg-white text-black group-hover:bg-gray-200  max-w-xs">{{ item.地址 }}</td>
-    <td class="border border-gray-300 px-4 py-2 bg-white text-black group-hover:bg-gray-200">
+  <td class="border border-gray-300 px-4 py-2 bg-white dark:bg-[rgb(51,71,94)] text-black dark:text-white group-hover:bg-gray-200 group-hover:dark:bg-[rgb(117,77,77)] hidden md:table-cell">{{ (currentpage - 1) * pageview + key + 1 }}</td>
+    <td class="border border-gray-300 px-4 py-2 bg-white dark:bg-[rgb(51,71,94)] text-black dark:text-white group-hover:bg-gray-200 group-hover:dark:bg-[rgb(117,77,77)]">{{ item.廠商 }}</td>
+    <td class="border border-gray-300 px-4 py-2 bg-white dark:bg-[rgb(51,71,94)] text-black dark:text-white group-hover:bg-gray-200 group-hover:dark:bg-[rgb(117,77,77)]">{{ item.名稱 }}</td>
+    <td class="border border-gray-300 px-4 py-2 bg-white dark:bg-[rgb(51,71,94)] text-black dark:text-white group-hover:bg-gray-200 group-hover:dark:bg-[rgb(117,77,77)] max-w-xs">{{ item.地址 }}</td>
+    <td class="border border-gray-300 px-4 py-2 bg-white dark:bg-[rgb(51,71,94)] text-black dark:text-white group-hover:bg-gray-200 group-hover:dark:bg-[rgb(117,77,77)]">
       <a :href="'https://www.google.com/maps/search/?api=1&query=' + item.地址" target="_blank" class="text-blue-500 flex justify-center">
      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                       class="size-5 w-8 h-10">
@@ -132,28 +140,28 @@ const totalpagesarray = computed(() => {
         </div>
         <div v-if="!apiCarStore.data" class="text-center text-gray-500 py-4">Loading...</div>
     <!-- 分頁控制 -->
-        <div class="flex justify-center mt-4">
+        <div class="flex justify-center mt-4 ">
   
           <button v-if="currentpage > 1" @click="gotopage(currentpage - 1)"
-            class="px-4 py-2 bg-gray-300 text-white rounded-md mr-2">
+            class="px-4 py-2 bg-gray-300 text-white rounded-md mr-2 cursor-pointer">
             < </button>
             <!--預設隱藏  在sm以上顯示  -->
               <div class="hidden sm:flex items-center">
                 <button v-for="page in totalpagesarray" :key="page" @click="gotopage(page)"
                   :class="{ 'bg-blue-500 text-white option': currentpage === page, 'bg-gray-300 text-black': currentpage !== page }"
-                  class="px-3 py-2 mx-1 rounded-md">
+                  class="px-3 py-2 mx-1 rounded-md cursor-pointer">
                   {{ page }}
                 </button>
               </div>
                 <!--在sm以上隱藏  -->
               <div class="sm:hidden flex items-center">
-                <span class="px-3 py-2 bg-blue-500 text-white rounded-md">
+                <span class="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer">
                   {{ currentpage }}
                 </span>
               </div>
   
               <button v-if="currentpage < totalpages" @click="gotopage(currentpage + 1)"
-                class="px-4 py-2 bg-gray-300 text-white rounded-md ml-2">
+                class="px-4 py-2 bg-gray-300 text-white rounded-md ml-2 cursor-pointer">
                 >
               </button>
         </div>

@@ -30,6 +30,7 @@ interface ApiCarResponse {
 
 export const useApiCar = defineStore('apidatacar', () => {
   const data = ref<ApiCarResponse | null>(null)
+  const fixedData = ref<ApiCarResponse | null>(null)
 
   async function cardata(query = '') {
     let url = '/api/car'
@@ -40,6 +41,9 @@ export const useApiCar = defineStore('apidatacar', () => {
     try {
       const response = await axios.get<ApiCarResponse>(url)
       data.value = response.data
+      if (!fixedData.value) {
+        fixedData.value = response.data // 第一次抓到就存固定資料
+      }
       console.log('測試 API:', url)
     } catch (error) {
       console.error('API 請求失敗:', error)
@@ -48,6 +52,7 @@ export const useApiCar = defineStore('apidatacar', () => {
 
   return {
     data,
+    fixedData,
     cardata
   }
 })

@@ -1,18 +1,18 @@
 <script setup lang="ts">
-  import { ref,onMounted,computed } from 'vue'
+  import { ref,onMounted,computed,watch } from 'vue'
   import { useApiMoto } from '../store/apimoto.ts'
   import searchinput from '../components/searchinput.vue'
   import DarkChange from '../components/DarkChange.vue'
   import Swal from 'sweetalert2'
-  const apiCarStore = useApiMoto()
+  const apiMoteStore = useApiMoto()
     const datadate = ref<string>('')
   onMounted(async () => {//頁面一載入執行api
- await apiCarStore.motodata('') 
+ await apiMoteStore.motodata('') 
 
-  console.log('API 回傳資料:', apiCarStore.data)
-  // console.log('API 總數:', apiCarStore.data.result.count)
+  console.log('API 回傳資料:', apiMoteStore.data)
+  // console.log('API 總數:', apiMoteStore.data.result.count)
   // console.log('總頁數',totalpages.value);
-  const date = apiCarStore.data?.result?.results?.[0]?._importdate?.date
+  const date = apiMoteStore.data?.result?.results?.[0]?._importdate?.date
   if (typeof date === 'string') {
     datadate.value = date.split(' ')[0]
   } 
@@ -31,57 +31,81 @@ const submitSearch = async () => {//按鈕送出事件
   }
   const query = `${searchselect.value} ${searchQuery.value}`;
   // 呼叫 API
-  await apiCarStore.motodata(query);
+  await apiMoteStore.motodata(query);
   // console.log('搜尋關鍵字:', query);
-  console.log('API 回傳資料:', apiCarStore.data)
-  // console.log('API 總數:', apiCarStore.data.result.count)
+  console.log('API 回傳資料:', apiMoteStore.data)
+  // console.log('API 總數:', apiMoteStore.data.result.count)
+    currentpage.value = 1
+
+  // 查無資料提醒
+  if (!apiMoteStore.data?.result?.results?.length) {
+    Swal.fire({
+      title: '查無資料',
+      confirmButtonText: '確定',
+      confirmButtonColor: '#3490dc'
+    })
+  }
 }
-const datacount = computed(() => apiCarStore.data?.result?.count || 0)
-// const datadate =  computed(() =>apiCarStore.data?.result?.results[0]._importdate.date.split(' ')[0])
+const datacount = computed(() => apiMoteStore.data?.result?.count || 0)// 資料總筆數
+// const datadate =  computed(() =>apiMoteStore.data?.result?.results[0]._importdate.date.split(' ')[0])
 
 //分頁功能
 const currentpage = ref(1)
 const pageview: number = 20 //一頁最多20筆
+// 總頁數
 const totalpages = computed(() => {
-    if (!apiCarStore.data) return 0
-    return Math.ceil(apiCarStore.data.result.results.length / pageview)
-  })
+  const len = apiMoteStore.data?.result?.results?.length ?? 0
+  return Math.ceil(len / pageview)
+})
+
+// 保證 currentpage 在合法範圍
+const safeCurrentPage = computed(() => {
+  if (totalpages.value === 0) return 1
+  return Math.min(Math.max(currentpage.value, 1), totalpages.value)
+})
+
+// 顯示分頁陣列
 const totalpagesarray = computed(() => {
-    const pages = []
-    let startPage = Math.max(currentpage.value - 1, 1)//限制至少為1
-    let endPage = Math.min(currentpage.value + 1, totalpages.value)//限制不大於總頁數
-  
-    // 頁碼顯示範圍
-    if (startPage > 1) {
-      pages.push(1)  // 第一頁
-      if (startPage > 2) pages.push('...')  // 顯示省略號
-    }
-  
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i)
-    }
-  
-    if (endPage < totalpages.value) {
+  const pages: (number | string)[] = []
+  const startPage = Math.max(safeCurrentPage.value - 1, 1)
+  const endPage = Math.min(safeCurrentPage.value + 1, totalpages.value)
+// 頁碼顯示範圍
+  if (startPage > 1) {
+    pages.push(1)// 第一頁
+    if (startPage > 2) pages.push('...')// 顯示省略號
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i)
+  }
+
+  if (endPage < totalpages.value) {
       if (endPage < totalpages.value - 1) pages.push('...')  // 顯示省略號
       pages.push(totalpages.value)  // 最後一頁
-    }
-  
-    return pages
-  })
-
- const pageshowdata = computed(() => {
-    if (!apiCarStore.data) return []
-    const start = (currentpage.value - 1) * pageview
-    const end = start + pageview
-    return apiCarStore.data.result.results.slice(start, end)
-  })
-
-    const gotopage = (page: string | number) => {
-    if (typeof page === "number" && page >= 1 && page <= totalpages.value) {
-      currentpage.value = page
-      window.scrollTo({ top: 0, behavior: "smooth" })//畫面滾到置頂
-    }
   }
+
+  return pages
+})
+
+// 顯示資料（切分頁）
+const pageshowdata = computed(() => {
+  const list = apiMoteStore.data?.result?.results ?? []
+  const start = (safeCurrentPage.value - 1) * pageview
+  return list.slice(start, start + pageview)
+})
+
+const gotopage = (page: string | number) => {
+    if (typeof page === "number" && page >= 1 && page <= totalpages.value) {
+    currentpage.value = page
+      window.scrollTo({ top: 0, behavior: "smooth" })//畫面滾到置頂
+  }
+}
+
+// 當搜尋結果長度改變時，自動回到第一頁
+watch(
+  () => apiMoteStore.data?.result?.results?.length,
+  () => { currentpage.value = 1 }
+)
 </script>
 <template>
    <div class="relative flex justify-center  min-h-screen bg-gray-100  bg-[url('/images/changemoto.png')] bg-[length:100%_100%] bg-no-repeat bg-center ">
@@ -117,7 +141,7 @@ const totalpagesarray = computed(() => {
                 <th class="border border-gray-300 px-4 py-2 ">google map</th>
               </tr>
             </thead>
-          <tbody v-if="apiCarStore.data && apiCarStore.data.result && apiCarStore.data.result.results">
+          <tbody v-if="apiMoteStore.data && apiMoteStore.data.result && apiMoteStore.data.result.results">
   <tr v-for="(item, key) in pageshowdata" :key="key" class="group">
   <td class="border border-gray-300 px-4 py-2 bg-white dark:bg-[rgb(51,71,94)] text-black dark:text-white group-hover:bg-gray-200 group-hover:dark:bg-[rgb(117,77,77)] hidden md:table-cell">{{ (currentpage - 1) * pageview + key + 1 }}</td>
     <td class="border border-gray-300 px-4 py-2 bg-white dark:bg-[rgb(51,71,94)] text-black dark:text-white group-hover:bg-gray-200 group-hover:dark:bg-[rgb(117,77,77)]">{{ item.廠商 }}</td>
@@ -138,7 +162,13 @@ const totalpagesarray = computed(() => {
 
           </table>
         </div>
-        <div v-if="!apiCarStore.data" class="text-center text-gray-500 py-4">Loading...</div>
+       <!-- 沒資料 -->
+      <div v-if="apiMoteStore.data && totalpages === 0" class="text-center text-gray-500 py-4">
+        查無資料
+      </div>
+      <div v-else-if="!apiMoteStore.data" class="text-center text-gray-500 py-4">
+        Loading...
+      </div>
     <!-- 分頁控制 -->
         <div class="flex justify-center mt-4 ">
   

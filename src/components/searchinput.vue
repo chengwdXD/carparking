@@ -18,9 +18,9 @@
    
         <!-- ($event.target as HTMLInputElement).value) ts 判斷input的型別是value  -->
         <input
-          :value="modelValue"
+          :value="props.modelValue"
           @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-          :placeholder="placeholder || '搜尋...'"
+          :props.placeholder="props.placeholder || '搜尋...'"
           class="w-full p-2 pl-10 pr-10 border rounded-lg shadow-sm   dark:bg-gray-800 dark:text-white dark:border-gray-600 focus-visible:outline-none"
         />
   

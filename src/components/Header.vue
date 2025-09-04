@@ -8,7 +8,7 @@ const isOpen = ref(false)
 <template>
   <header class="bg-gray-800 text-white sticky top-0 z-50">
     <div class="container max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-      <p class="text-xl font-bold">測試 Header</p>
+       <RouterLink to="/"><p class="text-xl font-bold text-gray-300">Chargeing</p></RouterLink>
 
       <!-- 漢堡選單按鈕 (手機用) -->
       <button @click="isOpen = !isOpen" class="md:hidden focus:outline-none">
@@ -21,9 +21,9 @@ const isOpen = ref(false)
 
       <!-- 導覽連結（桌機版） -->
       <nav class="hidden md:flex space-x-4">
-        <RouterLink to="/" class="hover:text-yellow-400" >回首頁</RouterLink>
-        <RouterLink to="/car" class="hover:text-yellow-400">回車車頁面</RouterLink>
-        <RouterLink to="/moto" class="hover:text-yellow-400">回機車頁面</RouterLink>
+        <RouterLink to="/" ><p class="hover:text-green-300 text-gray-300" >首頁</p></RouterLink>
+        <RouterLink to="/car" ><p class="hover:text-green-300 text-gray-300" >電動車停車場</p></RouterLink>
+        <RouterLink to="/moto" ><p class="hover:text-green-300 text-gray-300" >電動機車停車場</p></RouterLink>
       </nav>
     </div>
 
@@ -34,9 +34,9 @@ const isOpen = ref(false)
         isOpen ? 'max-h-40 py-3' : 'max-h-0 py-0'
       ]"
     >
-        <RouterLink to="/" class="block hover:text-yellow-300" @click="isOpen = false">回首頁</RouterLink>
-        <RouterLink to="/car" class="block hover:text-yellow-300" @click="isOpen = false">回車車頁面</RouterLink>
-        <RouterLink to="/moto" class="block hover:text-yellow-300" @click="isOpen = false">回機車頁面</RouterLink>
+        <RouterLink to="/" class="block " @click="isOpen = false"><p class="hover:text-green-300 text-gray-300" >首頁</p></RouterLink>
+        <RouterLink to="/car" class="block" @click="isOpen = false"><p class="hover:text-green-300 text-gray-300" >電動車停車場</p></RouterLink>
+        <RouterLink to="/moto" class="block" @click="isOpen = false"><p class="hover:text-green-300 text-gray-300" >電動機車停車場</p></RouterLink>
       </div>
   </header>
 </template>

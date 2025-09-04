@@ -12,13 +12,16 @@
     "@tailwindcss/vite": "^4.1.10",
     "axios": "^1.9.0",
     "pinia": "^3.0.3",
-    "tailwindcss": "^4.1.10",
+    "sweetalert2": "^11.22.2",
+    "swiper": "^11.2.10",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vue-sweetalert2": "^5.0.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/tsconfig": "^0.7.0",
+    "tailwindcss": "^4.1.10",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
     "vue-tsc": "^2.2.8"

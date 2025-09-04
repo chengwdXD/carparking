@@ -7,7 +7,7 @@ const isOpen = ref(false)
 
 <template>
   <header class="bg-gray-800 text-white sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <div class="container max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
       <p class="text-xl font-bold">測試 Header</p>
 
       <!-- 漢堡選單按鈕 (手機用) -->

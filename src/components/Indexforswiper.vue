@@ -22,7 +22,7 @@ const images = [
     class="mySwiper"
   >
     <swiper-slide v-for="(item, index) in images" :key="index">
-  <div class="relative w-full md:aspect-[21/9] h-[550px]"> 
+  <div class="relative w-full  lg:h-[700px]  h-[500px]"> 
     <img :src="item" class="absolute top-0 left-0 w-full h-full object-cover" />
   </div>
 </swiper-slide>

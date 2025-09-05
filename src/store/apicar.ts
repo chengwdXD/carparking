@@ -33,10 +33,10 @@ export const useApiCar = defineStore('apidatacar', () => {
   const fixedData = ref<ApiCarResponse | null>(null)
 
   async function cardata(query = '') {
-    // 從環境變數抓 API
-    let url = import.meta.env.VITE_API_CAR
+    // 指向 Vercel Serverless Function
+    let url = '/api/car'
     if (query && query !== 'none') {
-      url += `&q=${encodeURIComponent(query)}`
+      url += `?q=${encodeURIComponent(query)}`
     }
 
     try {

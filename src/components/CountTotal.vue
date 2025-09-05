@@ -2,7 +2,7 @@
  import { onMounted} from 'vue'
  import { useApiCar } from '../store/apicar.ts'
  import { useApiMoto } from '../store/apimoto.ts'
- import {RouterView} from "vue-router"
+ import {RouterLink} from "vue-router"
   const apiCarStore = useApiCar()
   const apiMotoStore = useApiMoto()
 

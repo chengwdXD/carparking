@@ -33,7 +33,7 @@ export const useApiMoto = defineStore('apidatamoto', () => {
     let url = '/api/moto'
 
     if (query && query !== 'none') {//如果有帶搜尋條件時
-      url += `&q=${encodeURIComponent(query)}`
+      url += `?q=${encodeURIComponent(query)}`
     }
 
     try {

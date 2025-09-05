@@ -33,7 +33,7 @@ export const useApiCar = defineStore('apidatacar', () => {
   const fixedData = ref<ApiCarResponse | null>(null)
 
   async function cardata(query = '') {
-    // 指向 Vercel Serverless Function
+   
     let url = '/api/car'
     if (query && query !== 'none') {
       url += `?q=${encodeURIComponent(query)}`

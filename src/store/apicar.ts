@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
 
-//定義型別
+// 定義型別
 interface CarStation {
   _id: number
   _importdate: {
@@ -33,7 +33,8 @@ export const useApiCar = defineStore('apidatacar', () => {
   const fixedData = ref<ApiCarResponse | null>(null)
 
   async function cardata(query = '') {
-    let url = '/api/car'
+    // 從環境變數抓 API
+    let url = import.meta.env.VITE_API_CAR
     if (query && query !== 'none') {
       url += `&q=${encodeURIComponent(query)}`
     }

@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
-    "axios": "^1.9.0",
+    "@vercel/node": "^5.3.21",
+    "axios": "^1.11.0",
     "pinia": "^3.0.3",
     "sweetalert2": "^11.22.2",
     "swiper": "^11.2.10",

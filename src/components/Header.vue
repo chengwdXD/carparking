@@ -23,7 +23,7 @@ const isOpen = ref(false)
       <nav class="hidden md:flex space-x-4">
         <RouterLink to="/" ><p class="hover:text-green-300 text-gray-300" >首頁</p></RouterLink>
         <RouterLink to="/car" ><p class="hover:text-green-300 text-gray-300" >電動車停車場</p></RouterLink>
-        <RouterLink to="/moto" ><p class="hover:text-green-300 text-gray-300" >電動機車停車場</p></RouterLink>
+        <RouterLink to="/moto" ><p class="hover:text-green-300 text-gray-300" >電動機車換電站</p></RouterLink>
       </nav>
     </div>
 
@@ -36,7 +36,7 @@ const isOpen = ref(false)
     >
         <RouterLink to="/" class="block " @click="isOpen = false"><p class="hover:text-green-300 text-gray-300" >首頁</p></RouterLink>
         <RouterLink to="/car" class="block" @click="isOpen = false"><p class="hover:text-green-300 text-gray-300" >電動車停車場</p></RouterLink>
-        <RouterLink to="/moto" class="block" @click="isOpen = false"><p class="hover:text-green-300 text-gray-300" >電動機車停車場</p></RouterLink>
+        <RouterLink to="/moto" class="block" @click="isOpen = false"><p class="hover:text-green-300 text-gray-300" >電動機車換電站</p></RouterLink>
       </div>
   </header>
 </template>

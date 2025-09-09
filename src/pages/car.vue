@@ -4,7 +4,6 @@ import { useApiCar } from '../store/apicar.ts'
 import searchinput from '../components/searchinput.vue'
 import DarkChange from '../components/DarkChange.vue'
 import Swal from 'sweetalert2'
-import { RouterLink } from 'vue-router'
 
 const apiCarStore = useApiCar()
 const datadate = ref<string>('')
@@ -48,7 +47,12 @@ const submitSearch = async () => {//按鈕送出事件
     })
   }
 }
-
+const resetSearch = async () => {
+  searchQuery.value = ''        // 清空搜尋文字
+  searchselect.value = '地址'   // 重置下拉選單
+  currentpage.value = 1         // 重置頁碼
+  await apiCarStore.cardata('') // 重新抓全部資料
+}
 // 資料總筆數
 const datacount = computed(() => apiCarStore.data?.result?.count || 0)
 
@@ -116,7 +120,7 @@ watch(
    <div class="relative flex justify-center  min-h-screen bg-gray-100  bg-[url('/images/chargecar.png')] bg-[length:100%_100%] bg-no-repeat bg-center  ">
     <div class="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
       <div class="w-full max-w-5xl dark:bg-[lightslategray] bg-gray-100  shadow-md rounded-lg p-6 z-10">   
-      <RouterLink to="/car" ><div class="font-mono">臺北市電動車充電站資訊</div></RouterLink>
+     <div @click="resetSearch" class="font-mono">臺北市電動車充電站資訊</div>
    <div  class="p-4 flex items-center space-x-2 mx-auto max-w-3xl flex-col md:flex-row">
         <select v-model="searchselect" class=" bg-white dark:bg-gray-800 dark:text-white px-4 py-2 border rounded w-full mb-5 md:w-auto md:mb-0 cursor-pointer focus-visible:outline-none">
           <option value="地址">地址</option>

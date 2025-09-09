@@ -120,7 +120,7 @@ watch(
    <div class="relative flex justify-center  min-h-screen bg-gray-100  bg-[url('/images/chargecar.png')] bg-[length:100%_100%] bg-no-repeat bg-center  ">
     <div class="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
       <div class="w-full max-w-5xl dark:bg-[lightslategray] bg-gray-100  shadow-md rounded-lg p-6 z-10">   
-     <div @click="resetSearch" class="font-mono">臺北市電動車充電站資訊</div>
+     <div @click="resetSearch" class="font-mono cursor-pointer">臺北市電動車充電站資訊</div>
    <div  class="p-4 flex items-center space-x-2 mx-auto max-w-3xl flex-col md:flex-row">
         <select v-model="searchselect" class=" bg-white dark:bg-gray-800 dark:text-white px-4 py-2 border rounded w-full mb-5 md:w-auto md:mb-0 cursor-pointer focus-visible:outline-none">
           <option value="地址">地址</option>

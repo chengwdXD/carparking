@@ -46,6 +46,12 @@ const submitSearch = async () => {//按鈕送出事件
     })
   }
 }
+const resetSearch = async () => {
+  searchQuery.value = ''        // 清空搜尋文字
+  searchselect.value = '地址'   // 重置下拉選單
+  currentpage.value = 1         // 重置頁碼
+  await apiMoteStore.motodata('') // 重新抓全部資料
+}
 const datacount = computed(() => apiMoteStore.data?.result?.count || 0)// 資料總筆數
 // const datadate =  computed(() =>apiMoteStore.data?.result?.results[0]._importdate.date.split(' ')[0])
 
@@ -111,7 +117,7 @@ watch(
    <div class="relative flex justify-center  min-h-screen bg-gray-100  bg-[url('/images/changemoto.png')] bg-[length:100%_100%] bg-no-repeat bg-center ">
     <div class="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
       <div class="w-full max-w-5xl bg-white  dark:bg-[lightslategray]  shadow-md rounded-lg p-6 z-10">
-        <div class="font-mono">臺北市電動機車換電站資訊</div>
+        <div @click="resetSearch" class="font-mono cursor-pointer">臺北市電動機車換電站資訊</div>
    <div  class="p-4 flex items-center space-x-2 mx-auto max-w-3xl flex-col md:flex-row">
         <select v-model="searchselect" class="dark:bg-gray-800 dark:text-white px-4 py-2 border rounded w-full mb-5 md:w-auto md:mb-0 cursor-pointer focus-visible:outline-none">
           <option value="地址">地址</option>

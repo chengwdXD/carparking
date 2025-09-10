@@ -36,7 +36,7 @@ export const useApiCar = defineStore('apidatacar', () => {
    
     let url = '/api/car'
     if (query && query !== 'none') {
-      url += `&q=${encodeURIComponent(query)}`
+      url += `?q=${encodeURIComponent(query)}`
     }
 
     try {

@@ -50,7 +50,7 @@ const resetSearch = async () => {
   searchQuery.value = ''        // 清空搜尋文字
   searchselect.value = '地址'   // 重置下拉選單
   currentpage.value = 1         // 重置頁碼
-  await apiMoteStore.motodata('') // 重新抓全部資料
+  apiMoteStore.data = apiMoteStore.fixedData // 重新抓全部資料
 }
 const datacount = computed(() => apiMoteStore.data?.result?.count || 0)// 資料總筆數
 // const datadate =  computed(() =>apiMoteStore.data?.result?.results[0]._importdate.date.split(' ')[0])

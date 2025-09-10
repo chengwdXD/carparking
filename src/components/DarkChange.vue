@@ -5,7 +5,7 @@ const isDark = ref(false)
 
 // 載入時檢查 localStorage 是否曾經切換過模式
 onMounted(() => {
-  isDark.value = document.documentElement.classList.contains('dark')
+  isDark.value = document.documentElement.classList.contains('dark')//檢查是否有dark
 })
 
 // 切換暗模式

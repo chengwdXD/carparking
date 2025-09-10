@@ -30,13 +30,13 @@ interface ApiCarResponse {
 
 export const useApiCar = defineStore('apidatacar', () => {
   const data = ref<ApiCarResponse | null>(null)
-  const fixedData = ref<ApiCarResponse | null>(null)
+  const fixedData = ref<ApiCarResponse | null>(null)//用來儲存預設搜尋的值
 
   async function cardata(query = '') {
    
     let url = '/api/car'
     if (query && query !== 'none') {
-      url += `?q=${encodeURIComponent(query)}`
+      url += `&q=${encodeURIComponent(query)}`
     }
 
     try {

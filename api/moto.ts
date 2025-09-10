@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
+import type { VercelRequest, VercelResponse } from '@vercel/node'//引入vercel提供的型別
 import axios from 'axios'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -10,6 +10,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           scope: 'resourceAquire',
           limit: 1000,
           q: req.query.q || undefined, // 支援查詢參數
+          //https://data.taipei/api/v1/dataset/c0f07b6c-ff55-4fae-a390-ddfe9374d4d7?scope=resourceAquire?q=
         },
       }
     )

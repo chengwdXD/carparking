@@ -51,7 +51,7 @@ const resetSearch = async () => {
   searchQuery.value = ''        // 清空搜尋文字
   searchselect.value = '地址'   // 重置下拉選單
   currentpage.value = 1         // 重置頁碼
-  await apiCarStore.cardata('') // 重新抓全部資料
+  apiCarStore.data = apiCarStore.fixedData // 重新抓全部資料
 }
 // 資料總筆數
 const datacount = computed(() => apiCarStore.data?.result?.count || 0)
@@ -63,10 +63,10 @@ const pageview: number = 20 // 一頁最多 20 筆
 // 總頁數
 const totalpages = computed(() => {
   const len = apiCarStore.data?.result?.results?.length ?? 0
-  return Math.ceil(len / pageview)
+  return Math.ceil(len / pageview)//ceil無條件進位
 })
 
-// 保證 currentpage 在合法範圍
+// 避免 currentpage 為0或-1 
 const safeCurrentPage = computed(() => {
   if (totalpages.value === 0) return 1
   return Math.min(Math.max(currentpage.value, 1), totalpages.value)

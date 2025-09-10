@@ -8,13 +8,13 @@ const showcharge=ref(false);//預設一開始隱藏
 //充電動畫
 const percent = ref(0) // 當前%數
 const targetPercent = 85 // 目標百分比
-const dashArray = 2 * Math.PI * 45 // 圓周長 (半徑45)
+const dashArray = 2 * Math.PI * 45 // 圓周長公式 (半徑用45)
 const dashOffset = ref(dashArray)
 let intervalId: number | null = null
 onMounted(() => {
   let index = 0 //紀錄目前字出現的位置
   const interval = setInterval(() => {
-    if (index < fullText.length) {
+    if (index < fullText.length) {//判斷字的長度
       displayText.value += fullText[index]
       index++
     } else {
@@ -36,7 +36,7 @@ setTimeout(() => {
          percent.value = 0
   }, 500);
     }
-    dashOffset.value = dashArray * (1 - percent.value / 100)
+    dashOffset.value = dashArray * (1 - percent.value / 100)//計算百分比
   }, 100) //85%之前一直充電
 })
 onBeforeUnmount(() => {
@@ -78,7 +78,8 @@ onBeforeUnmount(() => {
                            style="transition: stroke-dashoffset 0.05s linear"
                            />
                         </svg>
-
+                        <!-- stroke-dasharray定義圓周的總長度 -->
+                        <!-- stroke-dashoffset控制圓周長畫到哪裡 -->
                         <!-- 百分比文字 -->
                         <div class=" absolute bottom-[80px] left-[80px]  text-2xl font-bold text-slate-700">
                            {{ percent }}%
